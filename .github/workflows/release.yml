@@ -64,6 +64,8 @@ jobs:
       - name: Package (macOS)
         if: matrix.os == 'macos-latest'
         run: |
+          # Ad-hoc sign the app (helps with Gatekeeper "damaged" error)
+          codesign --force --deep --sign - build/ChristmasOverlay.app
           macdeployqt build/ChristmasOverlay.app -dmg
           mv build/ChristmasOverlay.dmg ChristmasOverlay-macOS.dmg
 
