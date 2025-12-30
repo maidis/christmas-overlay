@@ -67,7 +67,7 @@ jobs:
           # Ad-hoc sign the app (helps with Gatekeeper "damaged" error)
           codesign --force --deep --sign - build/ChristmasOverlay.app
           macdeployqt build/ChristmasOverlay.app -dmg
-          mv build/ChristmasOverlay.dmg ChristmasOverlay-macOS.dmg
+          find . -name "*.dmg" -exec mv {} ChristmasOverlay-macOS.dmg \;
 
       - name: Package (Linux)
         if: matrix.os == 'ubuntu-latest'
@@ -96,13 +96,15 @@ jobs:
           # Create AppImage
           # Point to the executable explicitly and set QMAKE/EXTRA_QT_PLUGINS
           export QMAKE=$(which qmake6 || which qmake)
+          export VERSION=1.0.10
           ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin qt --output appimage \
             --executable AppDir/usr/bin/ChristmasOverlay
           
-          # Use broader wildcard for moving (Discovery fix)
-          mv *.AppImage ChristmasOverlay-Linux.AppImage
+          # Use find for discovery
+          find . -maxdepth 1 -name "*.AppImage" -not -name "linuxdeploy*" -exec mv {} ChristmasOverlay-Linux.AppImage \;
 
-      - name: Create Release
+      - name: Diagnostic LS
+        run: ls -R
         uses: softprops/action-gh-release@v1
         with:
           files: ${{ matrix.artifact_name }}
