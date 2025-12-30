@@ -1,2 +1,0 @@
-set(__QT_DEPLOY_TARGET_ChristmasOverlay_FILE /Users/anilozbek/.gemini/antigravity/scratch/christmas_overlay/build/Qt_6_10_1_for_macOS-Release/ChristmasOverlay.app/Contents/MacOS/ChristmasOverlay)
-set(__QT_DEPLOY_TARGET_ChristmasOverlay_TYPE EXECUTABLE)

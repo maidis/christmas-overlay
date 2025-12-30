@@ -1,5 +1,0 @@
-/Users/anilozbek/.gemini/antigravity/scratch/christmas_overlay/build/CMakeFiles/ChristmasOverlay.dir
-/Users/anilozbek/.gemini/antigravity/scratch/christmas_overlay/build/CMakeFiles/edit_cache.dir
-/Users/anilozbek/.gemini/antigravity/scratch/christmas_overlay/build/CMakeFiles/rebuild_cache.dir
-/Users/anilozbek/.gemini/antigravity/scratch/christmas_overlay/build/CMakeFiles/ChristmasOverlay_autogen_timestamp_deps.dir
-/Users/anilozbek/.gemini/antigravity/scratch/christmas_overlay/build/CMakeFiles/ChristmasOverlay_autogen.dir
