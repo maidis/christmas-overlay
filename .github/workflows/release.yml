@@ -72,6 +72,9 @@ jobs:
         run: |
           # Install linuxdeploy and the Qt plugin
           wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+          wget -q https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
+          chmod +x linuxdeploy*.AppImage
+          
           # Install to AppDir (must include usr/ for AppImage standards)
           cmake --install build --prefix AppDir/usr
           
