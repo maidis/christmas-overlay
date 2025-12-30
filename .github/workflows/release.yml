@@ -14,12 +14,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-14, windows-latest]
         include:
           - os: ubuntu-latest
             platform: linux
             artifact_name: ChristmasOverlay-Linux.AppImage
-          - os: macos-latest
+          - os: macos-14
             platform: macos
             artifact_name: ChristmasOverlay-macOS.dmg
           - os: windows-latest
@@ -80,6 +80,10 @@ jobs:
           # Install to AppDir (must include usr/ for AppImage standards)
           cmake --install build --prefix AppDir/usr
           
+          # Create a minimal desktop file (required by linuxdeploy)
+          mkdir -p AppDir/usr/share/applications
+          echo "[Desktop Entry]" > AppDir/usr/share/applications/ChristmasOverlay.desktop
+          echo "Type=Application" >> AppDir/usr/share/applications/ChristmasOverlay.desktop
           echo "Name=ChristmasOverlay" >> AppDir/usr/share/applications/ChristmasOverlay.desktop
           echo "Exec=ChristmasOverlay" >> AppDir/usr/share/applications/ChristmasOverlay.desktop
           echo "Icon=ChristmasOverlay" >> AppDir/usr/share/applications/ChristmasOverlay.desktop
