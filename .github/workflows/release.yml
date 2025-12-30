@@ -1,0 +1,88 @@
+name: Release Build
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    name: Build ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            platform: linux
+            output: ChristmasOverlay-Linux.AppImage
+          - os: macos-latest
+            platform: macos
+            output: ChristmasOverlay-macOS.dmg
+          - os: windows-latest
+            platform: windows
+            output: ChristmasOverlay-Windows.zip
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.5.3' # Stable Qt6 version
+          host: ${{ matrix.platform == 'windows' && 'windows' || matrix.platform == 'macos' && 'mac' || 'linux' }}
+          target: 'desktop'
+          arch: ${{ matrix.platform == 'windows' && 'win64_msvc2019_64' || '' }}
+
+      - name: Install Dependencies (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libglu1-mesa-dev xorg-dev libxkbcommon-dev
+
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Package (Windows)
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: |
+          cd build/Release
+          windeployqt --no-compiler-runtime --qmldir ../../ ChristmasOverlay.exe
+          Compress-Archive -Path * -DestinationPath ../../ChristmasOverlay-Windows.zip
+
+      - name: Package (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          macdeployqt build/ChristmasOverlay.app -dmg
+          mv build/ChristmasOverlay.dmg ChristmasOverlay-macOS.dmg
+
+      - name: Package (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          # Install linuxdeploy and the Qt plugin
+          wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+          wget https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
+          chmod +x linuxdeploy*.AppImage
+          
+          # Prepare AppDir
+          mkdir -p AppDir
+          DESTDIR=AppDir make -C build install
+          
+          # Create AppImage
+          export OUTPUT=ChristmasOverlay-Linux.AppImage
+          ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin qt --output appimage
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ChristmasOverlay-Windows.zip
+            ChristmasOverlay-macOS.dmg
+            ChristmasOverlay-Linux.AppImage
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

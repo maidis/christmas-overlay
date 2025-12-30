@@ -1,0 +1,10 @@
+# ninja log v6
+1	421	1767042883880793615	ChristmasOverlay_autogen/timestamp	2bef5d736fc6446c
+1	421	1767042883880793615	ChristmasOverlay_autogen/mocs_compilation.cpp	2bef5d736fc6446c
+1	421	1767042883880793615	/Users/anilozbek/.gemini/antigravity/scratch/christmas_overlay/build/Qt_6_10_1_for_macOS-Release/ChristmasOverlay_autogen/timestamp	2bef5d736fc6446c
+1	421	1767042883880793615	/Users/anilozbek/.gemini/antigravity/scratch/christmas_overlay/build/Qt_6_10_1_for_macOS-Release/ChristmasOverlay_autogen/mocs_compilation.cpp	2bef5d736fc6446c
+424	1575	1767042883896892290	CMakeFiles/ChristmasOverlay.dir/ChristmasOverlay_autogen/mocs_compilation.cpp.o	ffa0909dc1e2658c
+424	1578	1767042883897151868	CMakeFiles/ChristmasOverlay.dir/src/main.cpp.o	46a6518692cc8639
+424	1592	1767042883897388406	CMakeFiles/ChristmasOverlay.dir/src/snowoverlay.cpp.o	eb48ab209753d50f
+424	1716	1767042883897276491	CMakeFiles/ChristmasOverlay.dir/src/treewidget.cpp.o	64f33728de841940
+1716	1828	1767042885188630749	ChristmasOverlay.app/Contents/MacOS/ChristmasOverlay	4e530876c9df9719
